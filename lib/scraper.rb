@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'nokogiri'
 require 'pry'
 require_relative "../config.rb"
 
@@ -19,6 +20,7 @@ class Scraper
   end
 
   def self.scrape_profile_page(profile_url)
+
     profile_page = Nokogiri::HTML(open(profile_url))
     social_media = profile_page.css("div.social-icon-container a").collect {|e| e.attribute("href").value}
 
@@ -31,9 +33,7 @@ class Scraper
       bio: profile_page.css("div.description-holder p").text
     }.compact
 
+
   end
 
 end
-
-#Scraper.scrape_index_page("./fixtures/student-site/index.html")
-#Scraper.scrape_profile_page("./fixtures/student-site/students/ryan-johnson.html")
